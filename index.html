@@ -1,0 +1,45 @@
+<!-- Serves messaging form for testing websocket implementation-->
+<!doctype html>
+<html>
+    <head>
+        <!-- Provides access to socket.io client functions -->
+        <script src='/socket.io/socket.io.js'></script>
+        <!-- Example form found in tutorials-->
+        <script>
+            var socket = io();
+
+            // Listen for welcome events from server
+            socket.on('welcome', function(data) {
+                addMessage(data.message);
+
+                // Respond with a message including this clients' id sent from the server
+                socket.emit('i am client', {data: 'foo!', id: data.id});
+            });
+
+            // Listen to time events from s erver
+            socket.on('time', function(data) {
+                addMessage(data.time);
+            });
+
+            // Listen to error events from server
+            socket.on('error', console.error.bind(console));
+
+            // Listen to message events from server
+            socket.on('message', console.log.bind(console));
+
+            // Adds messages to 'messages' dom element
+            function addMessage(message) {
+                var text = document.createTextNode(message),
+                    el = document.createElement('li'),
+                    messages = document.getElementById('messages');
+
+                el.appendChild(text);
+                messages.appendChild(el);
+            }
+        </script>
+    </head>
+    <body>
+        <!-- Displays all messages -->
+        <ul id='messages'></ul>
+    </body>
+</html>

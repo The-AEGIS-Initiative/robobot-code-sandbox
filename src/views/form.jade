@@ -1,0 +1,11 @@
+extends layout
+
+block content
+  h1= title
+  p Post data here:
+  form(name="POST-data", method="post")
+    div.input
+      span.label Data
+      input(type="text", name="name") 
+    div.actions
+      Input(type="submit", value="add")
