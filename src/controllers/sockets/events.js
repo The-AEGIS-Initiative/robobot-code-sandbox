@@ -31,19 +31,14 @@ const formatGameServerURL = (port, ip)  => {
 
 var ip = '';
 
-if(process.env.NODE_ENV == "production"){
-    try{
-        http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
-            res.setEncoding('utf8');
-            res.on('data', (data) => {
-                console.log(data);
-                ip = data
-            });
-        })
-    } catch (e) {
-        console.log(e)
-    }
-    
+if(process.env.AWS_SESSION_TOKEN != null){
+    http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
+        res.setEncoding('utf8');
+        res.on('data', (data) => {
+            console.log(data);
+            ip = data
+        });
+    })
 }
 
 
