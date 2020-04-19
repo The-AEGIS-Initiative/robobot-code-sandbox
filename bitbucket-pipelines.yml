@@ -1,0 +1,23 @@
+# This is a sample build configuration for Docker.
+# Check our guides at https://confluence.atlassian.com/x/O1toN for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+image: atlassian/default-image:2
+
+pipelines:
+  default:
+    - step:
+            caches:
+              - docker
+            services:
+              - docker
+            script: 
+              - export IMAGE_NAME=kevinkqi/robobot-back-end:$BITBUCKET_COMMIT
+              - docker build -t $IMAGE_NAME back-end/
+              - docker run -p 8000:8000
+                           -d
+                           -e DB_USERNAME=$STAGE_DB_USERNAME
+                           -e DB_PASSWORD=$STAGE_DB_PASSWORD
+                           -e DB_URL=$STAGE_DB_URL
+                           $IMAGE_NAME
