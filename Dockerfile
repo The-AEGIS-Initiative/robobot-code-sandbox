@@ -13,14 +13,11 @@ RUN npm install
 COPY . .
 
 # Run Test Suite
-ENV DB_USERNAME=admin
-ENV DB_PASSWORD=admin
-ENV DB_URL=mongodb://mongo:27017
 ENV CI=true
 RUN npm test
 
 # Build
-ENV DB_USERNAME=$DB_USERNAME
-ENV DB_PASSWORD=$DB_PASSWORD
-ENV DB_URL=$DB_URL
+ENV DB_USERNAME=$BUILD_DB_USERNAME
+ENV DB_PASSWORD=$BUILD_DB_PASSWORD
+ENV DB_URL=$BUILD_DB_URL
 CMD ["npm", "run-script", "start-production"]

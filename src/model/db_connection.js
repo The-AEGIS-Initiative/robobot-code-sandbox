@@ -17,7 +17,7 @@ if(process.env.NODE_ENV=='development') { // Dev environment
 	const DB_URL = process.env.DB_URL
 	server = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+DB_URL;
 
-	console.log(DB_USERNAME)
+	console.log(server)
 }
 
 
