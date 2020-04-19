@@ -21,7 +21,7 @@ const formatGameServerURL = (port, ip)  => {
     const base = 'us-west-2.compute.amazonaws.com'
     const url = `ec2-${ip}.${base}:${port}/websocket`
     console.log(url)
-    if(process.env.NODE_ENV == "production"){
+    if(ip != ''){
         return url
     } else {
         return `localhost:${port}/websocket`
@@ -32,13 +32,18 @@ const formatGameServerURL = (port, ip)  => {
 var ip = '';
 
 if(process.env.NODE_ENV == "production"){
-    http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
-        res.setEncoding('utf8');
-        res.on('data', (data) => {
-            console.log(data);
-            ip = data
-        });
-    })
+    try{
+        http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
+            res.setEncoding('utf8');
+            res.on('data', (data) => {
+                console.log(data);
+                ip = data
+            });
+        })
+    } catch (e) {
+        console.log(e)
+    }
+    
 }
 
 
