@@ -2,7 +2,6 @@
  * Export layer for data models.
  */
 var mongoose = require("mongoose");
-var config = require("../../config.json");
 
 // Set Mongoose to use native JS promises
 mongoose.Promise = Promise;
