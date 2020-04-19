@@ -8,13 +8,21 @@ var config = require("../../config.json");
 mongoose.Promise = Promise;
 mongoose.set('useFindAndModify', false);
 
-// Connect to mlab MongoDB
-DB_USERNAME = process.env.DB_USERNAME
-DB_PASSWORD = process.env.DB_PASSWORD
-DB_URL = process.env.DB_URL
-console.log(DB_USERNAME)
 
-const server = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+DB_URL;
+var server = ""
+if(process.env.NODE_ENV=='development') { // Dev environment
+	server = 'mongodb://127.0.0.1:27017'
+} else { // Production environment
+	const DB_USERNAME = process.env.DB_USERNAME
+	const DB_PASSWORD = process.env.DB_PASSWORD
+	const DB_URL = process.env.DB_URL
+	server = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+DB_URL;
+
+	console.log(DB_USERNAME)
+}
+
+
+// Connect to MongoDB
 console.log(server)
 mongoose.connect(server, { useNewUrlParser: true, dbName: "testdb" });
 

@@ -10,8 +10,6 @@
  */
 const express = require('express');
 
-const axios = require('axios');
-
 /**
  * Express router to mount example functions
  * @type {object}
@@ -27,75 +25,6 @@ const router = express.Router();
 const { UserModel }= require("../model/models.js");
 
 const jwt = require('jsonwebtoken');
-
-router.post('/register', function(req, res, next) {
-  const body = req.body;
-
-  const email = body.email;
-  const password = body.password;
-
-  // Logging
-  // DANGER
-  console.log("request body: ", body);
-  console.log("email: ", email);
-  console.log("password: ", password);
-
-  // Create document from UserModel
-  const user = new UserModel({
-    email: email,
-    password: password
-  })
-
-  // Save user document into database
-  user.save().then(() => {
-    console.log("Data successfully posted to database")
-    res.status(200).json({
-        message: "Request body POST-ed"
-    });
-  }).catch((e) => {
-    res.status(500)
-      .send("Error with user registration. Please try again.");
-    console.log(e);
-    console.log("Data save failed");
-  });
-});
-
-router.post('/authenticate', function(req, res) {
-  const data = {
-    grant_type: req.body.grantType,
-    client_id: process.env.cognito_clientId,
-    code: req.body.accessToken,
-    scope: 'profile',
-    redirect_uri: process.env.cognito_redirectCallback,
-  };
-
-  const p = {
-    method: 'post',
-    url: `${process.env.cognito_domainUrl}/oauth2/token`,
-    data: qs.stringify(data),
-
-    auth: {
-      username: process.env.cognito_clientId,
-      password: process.env.cognito_secret,
-    },
-  };
-
-  console.log(`AWS oauth2 token request params: ${JSON.stringify(p)}`);
-  const awsResponse = await axios(p);
-  console.log(`AWS oauth response: ${JSON.stringify(awsResponse.data)}`);
-
-  res.send(awsResponse);
-});
-
-router.get('/logout', function(req, res) {
-  const token = jwt.sign({"empty": ""}, process.env.SECRET_TOKEN, {
-    expiresIn: '1s'
-  });
-
-  console.log("clearing cookie")
-  res.clearCookie('token')
-  res.sendStatus(200)
-});
 
 router.post('/code', function(req, res) {
   const token = req.cookies.token;

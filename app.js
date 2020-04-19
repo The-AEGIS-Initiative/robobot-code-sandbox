@@ -60,7 +60,9 @@ app.io = io;
 require('./src/controllers/sockets/events.js')(io);
 
 // Connect to mongoDB
-require('./src/model/db_connection.js');
+if(process.env.NODE_ENV != "test"){
+  require('./src/model/db_connection.js');
+}
 
 // Delete any dangling containers
 // TODO: This doesn't really work...
