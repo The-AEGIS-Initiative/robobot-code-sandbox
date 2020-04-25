@@ -27,35 +27,47 @@ const { UserModel }= require("../model/models.js");
 const jwt = require('jsonwebtoken');
 
 router.post('/code', function(req, res) {
-  const token = req.cookies.token;
-  var payload = jwt.decode(token)
-
-  const email = payload.email
+  const username = req.body.username
   const level = req.body.level
   const code = req.body.code
-  console.log(payload)
 
   // Attempt to update level data
   UserModel.findOneAndUpdate(
-      {'email': email, "progress.level": level},
+      {'username': username, "progress.level": level},
       {'$set': {"progress.$.code": code}}, 
       function(err, doc) {
-        console.log(doc)
+        console.log(`Existing code data for ${level}: ${doc}`)
 
         // Push if no data for level found
         if(doc == null){ 
           UserModel.findOneAndUpdate(
-            {'email': email},
+            {'username': username},
             {'$push': {progress: {"level": level, "code": code}}},
             function(err, doc){
-              console.log(doc)
-                if (err) {
-                res.error = err;
-                res.sendStatus(500);
-                console.log(err)
+              console.log(`${username} progress: ${doc}`)
+              if(doc == null){
+                UserModel.create(
+                  {'username': username, progress: {"level": level, "code": code}},
+                  function(err){
+                    if (err) {
+                      res.error = err;
+                      res.sendStatus(500);
+                      console.log(err)
+                    } else {
+                      console.log("user added and code added")
+                      res.sendStatus(200);
+                    }
+                  }
+                )
               } else {
-                console.log("user code updated")
-                res.sendStatus(200);
+                if (err) {
+                  res.error = err;
+                  res.sendStatus(500);
+                  console.log(err)
+                } else {
+                  console.log("user code added")
+                  res.sendStatus(200);
+                }
               }
             }
           );
@@ -74,34 +86,25 @@ router.post('/code', function(req, res) {
   );
 });
 
-router.get('/code/:level', function(req, res) {
-  const token = req.cookies.token;
-  if(token == null){
-    console.log("No authorization");
-    res.send({"code": ""})
-  }
-  var payload = jwt.decode(token)
-
-  const email = payload.email
+router.get('/code/:username/:level', function(req, res) {
+  const username = req.params.username
   const level = req.params.level
 
-  console.log(token)
-  
 
-  // Attempt to update level data
   UserModel.findOne(
-      {'email': email, "progress.level": level},
+      {'username': username, "progress.level": level},
       'progress.$',
       function(err, doc) {
-        
         // No level data found
         if(doc == null){ 
           console.log("No user progress for this level")
           res.send({"code": ""})
         } else {
           if (err) {
-            if(token == null){
+            if(username == ''){
+              console.log("Unauthenticated client shouldn't be calling this endpoint")
               res.send({"code": ""})
+              console.log(err)
             }
             res.error = err;
             res.send({"code": ""})
