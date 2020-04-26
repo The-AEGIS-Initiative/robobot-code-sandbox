@@ -52,7 +52,7 @@ var io = socket_io();
 if(process.env.NODE_ENV == "development"){
   io.set('origins', '*:*');
 } else {
-  io.set('origins', 'https://robobot.aegisinitiative.io:*');
+  io.set('origins', '*:*');
 }
 app.io = io;
 
