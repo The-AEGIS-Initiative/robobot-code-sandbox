@@ -62,7 +62,7 @@ module.exports.sandboxUserCode = (port, containerName, userCodeSource, userCodeT
     console.log(`Initializing ${containerName}`);
     
     // Spawn container
-    var docker_process = spawnDocker('kevinkqi/python-game-server:latest', port, containerName, userCodeSource, userCodeTarget);
+    var docker_process = spawnDocker('aegisinitiative/robobot-game-server:latest', port, containerName, userCodeSource, userCodeTarget);
     
     // Store child process information in ContainerInfo
     ContainerInfo[containerName].process = docker_process;
@@ -84,8 +84,10 @@ const spawnDocker = async (image, port, containerName, userCodeSource, userCodeT
     try {
         var docker = spawn('docker', ['run', '-t', '-d', '--rm',
                                 '-p', `${port}:8080`,
+                                '-e', `cert=${process.env.CERT}`,
+                                '-e', `certkey=${process.env.CERTKEY}`,
                                 '--name', `${containerName}`,
-                                `${image}`, 'sh']);
+                                `${image}`, 'sh',]);
     } catch {(e) => console.log(e)};
     
 

@@ -44,7 +44,7 @@ app.use(bodyparser.urlencoded({ extended: true }));
 if(process.env.NODE_ENV == "development"){
   app.use(cors({credentials: true, origin: true}));
 } else {
-  app.use(cors({credentials: true, origin: 'https://robobot.aegisinitiative.io'}));
+  app.use(cors({credentials: true, origin: true}));
 }
 
 // Initialize socket.io
