@@ -31,7 +31,7 @@ const formatGameServerURL = (port, ip)  => {
 
 var ip = '';
 
-if(process.env.AWS_SESSION_TOKEN != null){
+if(process.env.NODE_ENV != 'development'){
     http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
         res.setEncoding('utf8');
         res.on('data', (data) => {
