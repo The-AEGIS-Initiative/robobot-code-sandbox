@@ -41,19 +41,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // Set CORS
-if(process.env.NODE_ENV == "development"){
-  app.use(cors({credentials: true, origin: true}));
-} else {
-  app.use(cors({credentials: true, origin: true}));
-}
+app.use(cors({credentials: true, origin: true}));
 
 // Initialize socket.io
 var io = socket_io();
-if(process.env.NODE_ENV == "development"){
-  io.set('origins', '*:*');
-} else {
-  io.set('origins', '*:*');
-}
+io.set('origins', '*:*');
 app.io = io;
 
 // Initialize socket events
