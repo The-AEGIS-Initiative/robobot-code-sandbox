@@ -1,17 +1,6 @@
 {
   "containerDefinitions": [
     {
-      "dnsSearchDomains": null,
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "secretOptions": null,
-        "options": {
-          "awslogs-group": "/ecs/Robobot-Backend",
-          "awslogs-region": "us-west-2",
-          "awslogs-stream-prefix": "ecs"
-        }
-      },
-      "entryPoint": null,
       "portMappings": [
         {
           "hostPort": 8000,
@@ -19,9 +8,6 @@
           "containerPort": 8000
         }
       ],
-      "command": null,
-      "linuxParameters": null,
-      "cpu": 0,
       "environment": [
         {
           "name": "CERT",
@@ -48,40 +34,16 @@
           "value": "${SECRET_TOKEN}"
         }
       ],
-      "resourceRequirements": null,
-      "ulimits": null,
-      "dnsServers": null,
       "mountPoints": [
         {
-          "readOnly": null,
           "containerPath": "/var/run/docker.sock",
           "sourceVolume": "Docker-Daemon"
         }
       ],
-      "workingDirectory": null,
-      "secrets": null,
-      "dockerSecurityOptions": null,
       "memory": 300,
-      "memoryReservation": null,
       "volumesFrom": [],
-      "stopTimeout": null,
       "image": "${IMAGE_NAME}",
-      "startTimeout": null,
-      "firelensConfiguration": null,
-      "dependsOn": null,
-      "disableNetworking": null,
-      "interactive": null,
-      "healthCheck": null,
       "essential": true,
-      "links": null,
-      "hostname": null,
-      "extraHosts": null,
-      "pseudoTerminal": null,
-      "user": null,
-      "readonlyRootFilesystem": null,
-      "dockerLabels": null,
-      "systemControls": null,
-      "privileged": null,
       "name": "Robobot-Backend"
     }
   ],
@@ -90,16 +52,12 @@
     "EC2"
   ],
   "networkMode": "awsvpc",
-  "cpu": null,
-  "revision": 2,
   "volumes": [
     {
-      "efsVolumeConfiguration": null,
       "name": "Docker-Daemon",
       "host": {
         "sourcePath": "/var/run/docker.sock"
       },
-      "dockerVolumeConfiguration": null
     }
   ]
 }
