@@ -53,6 +53,21 @@ module.exports.assignContainerAndPort = (clientID) => {
     return ContainerInfo[containerName]
 }
 
+module.exports.updateGameServer = (successCallback, failCallBack) => {
+    var {stdout, stderr } = execSync(`docker pull aegisinitiative/robobot-game-server:latest`);
+    if(stderr){
+        console.log(stderr);
+        console.log("Did not update, error")
+        failCallBack(stderr);
+    } else {
+        console.log(stdout);
+        console.log("Updated")
+        successCallback(stdout);
+    }
+
+    
+}
+
 /** Initialize set of containers
  * @function
  * @memberof module:docker/manager

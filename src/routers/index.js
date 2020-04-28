@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
+const DockerManager = require('../controllers/docker/manager.js');
 
-// Import authentication method
-const withAuth = require('../../middleware.js');
 
 /**
 	Route serving index
@@ -12,10 +11,11 @@ router.get('/', function(req, res, next) {
 });
 
 
-// Authentication api
-router.get('/checkToken', withAuth, function(req, res) {
-	res.sendStatus(200);
-});
+router.get('/updateGameServer', function(req, res) {
+	const successCallBack = (log) => {res.status(200).send(log)}
+	const failCallBack = (err) => {res.status(500).send(err)}
+	DockerManager.updateGameServer(successCallBack, failCallBack)
+})
 
 
 module.exports = router;
