@@ -72,19 +72,11 @@ module.exports = (io) => {
 
         // Begin listening for submitUserCode events from client
         socket.on('submitUserCode', (data) => {
-            // Write user code to file with .java extension
-            filesystem.writeFile("public/usercode/temp.py", data["data"], err => {
-                // Throw errors
-                if (err) throw err;
-
-                // User code saved successfully
-                console.log("User code written to disk");
-            });
 
             // Send and run user code in designated container
             DockerManager.sandboxUserCode(containerInfo["port"], 
                                           containerInfo["containerName"],
-                                          `public/usercode/temp.py`,
+                                          data.data,
                                           `/app/game/user_code.py`);
         });
 

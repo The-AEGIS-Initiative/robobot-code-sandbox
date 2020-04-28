@@ -76,7 +76,7 @@ module.exports.sandboxUserCode = (port, containerName, userCodeSource, userCodeT
  * @param {*} port must be an unused port
  * @param {*} containerName container name for referencing
  */
-const spawnDocker = async (image, port, containerName, userCodeSource, userCodeTarget) => {
+const spawnDocker = async (image, port, containerName, userCode, userCodeTarget) => {
     var { stdout, stderr } = await exec(`docker rm -f ${containerName} || :`);
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
@@ -86,6 +86,7 @@ const spawnDocker = async (image, port, containerName, userCodeSource, userCodeT
                                 '-p', `${port}:8080`,
                                 '-e', `cert=${process.env.CERT}`,
                                 '-e', `certkey=${process.env.CERTKEY}`,
+                                '-e', `code=${userCode}`,
                                 '--name', `${containerName}`,
                                 `${image}`, 'sh',]);
     } catch {(e) => console.log(e)};
@@ -93,9 +94,6 @@ const spawnDocker = async (image, port, containerName, userCodeSource, userCodeT
 
     docker.stdout.on('data', async (data) => {
         console.log(`${containerName} stdout: ${data}`);
-        var {stdout, stderr } = await exec(`docker cp ${userCodeSource} ${containerName}:${userCodeTarget}`);
-        console.log(stderr);
-        console.log(stdout);
         var {stdout, stderr } = await exec(`docker exec ${containerName} python /app/main.py`);
         console.log(stderr);
         console.log(stdout);
