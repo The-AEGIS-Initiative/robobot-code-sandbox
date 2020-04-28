@@ -1,63 +1,54 @@
 {
-  "containerDefinitions": [
-    {
-      "portMappings": [
-        {
-          "hostPort": 8000,
-          "protocol": "tcp",
-          "containerPort": 8000
-        }
-      ],
-      "environment": [
-        {
-          "name": "CERT",
-          "value": "${AI_SSL_KEY}"
-        },
-        {
-          "name": "CERTKEY",
-          "value": "${AI_SSL_CERT}"
-        },
-        {
-          "name": "DB_PASSWORD",
-          "value": "${DB_PASSWORD}"
-        },
-        {
-          "name": "DB_URL",
-          "value": "${DB_URL}"
-        },
-        {
-          "name": "DB_USERNAME",
-          "value": "${DB_USERNAME}"
-        },
-        {
-          "name": "SECRET_TOKEN",
-          "value": "${SECRET_TOKEN}"
-        }
-      ],
-      "mountPoints": [
-        {
-          "containerPath": "/var/run/docker.sock",
-          "sourceVolume": "Docker-Daemon"
-        }
-      ],
-      "memory": 300,
-      "volumesFrom": [],
-      "image": "${IMAGE_NAME}",
-      "essential": true,
-      "name": "Robobot-Backend"
-    }
-  ],
+  "containerDefinitions": [{
+    "portMappings": [{
+      "hostPort": 8000,
+      "protocol": "tcp",
+      "containerPort": 8000
+    }],
+    "environment": [{
+        "name": "CERT",
+        "value": "${AI_SSL_KEY}"
+      },
+      {
+        "name": "CERTKEY",
+        "value": "${AI_SSL_CERT}"
+      },
+      {
+        "name": "DB_PASSWORD",
+        "value": "${DB_PASSWORD}"
+      },
+      {
+        "name": "DB_URL",
+        "value": "${DB_URL}"
+      },
+      {
+        "name": "DB_USERNAME",
+        "value": "${DB_USERNAME}"
+      },
+      {
+        "name": "SECRET_TOKEN",
+        "value": "${SECRET_TOKEN}"
+      }
+    ],
+    "mountPoints": [{
+      "containerPath": "/var/run/docker.sock",
+      "sourceVolume": "Docker-Daemon"
+    }],
+    "memory": 300,
+    "volumesFrom": [],
+    "image": "${IMAGE_NAME}",
+    "essential": true,
+    "name": "Robobot-Backend"
+  }],
   "family": "Robobot-Backend",
   "requiresCompatibilities": [
     "EC2"
   ],
   "networkMode": "awsvpc",
-  "volumes": [
-    {
-      "name": "Docker-Daemon",
-      "host": {
-        "sourcePath": "/var/run/docker.sock"
-      },
+  "volumes": [{
+    "name": "Docker-Daemon",
+    "host": {
+      "sourcePath": "/var/run/docker.sock"
     }
-  ]
+  }]
 }
