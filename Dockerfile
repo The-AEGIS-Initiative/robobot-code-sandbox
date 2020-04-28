@@ -13,8 +13,8 @@ RUN npm install
 COPY . .
 
 # Run Test Suite
-ENV CI=true
-RUN npm test
+# ENV CI=true
+# RUN npm test
 
 # Build
 CMD ["npm", "run-script", "start-production"]
