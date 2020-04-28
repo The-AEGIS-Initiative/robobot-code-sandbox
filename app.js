@@ -41,11 +41,27 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // Set CORS
-app.use(cors({credentials: true, origin: true}));
+const allowedOrigins = ['http://localhost:3000',
+                      'https://development-robobot.aegisinitiative.io',
+                      'https://robobot.aegisinitiative.io'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Initialize socket.io
 var io = socket_io();
-io.set('origins', '*');
+//io.set('origins', '*:*');
 app.io = io;
 
 // Initialize socket events
