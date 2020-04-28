@@ -54,7 +54,6 @@ definitions:
 pipelines:             
   branches:
     '**':
-      - step: *build-and-publish-docker-image
       - step: *deploy-to-aws-ecs
   pull-requests:
     '**':
