@@ -1,4 +1,4 @@
-image: node:10.15.3
+image: atlassian/default-image:2
 
 clone:
       depth: full  # SonarCloud scanner needs the full history to assign issues properly
