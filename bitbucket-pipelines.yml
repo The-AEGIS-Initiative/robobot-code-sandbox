@@ -54,6 +54,9 @@ definitions:
 pipelines:             
   branches:
     '**':
+      - step: *build-test-sonarcloud
+      - step: *check-quality-gate-sonarcloud
+      - step: *build-and-publish-docker-image
       - step: *deploy-to-aws-ecs
   pull-requests:
     '**':
