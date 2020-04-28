@@ -1,6 +1,4 @@
 {
-  "ipcMode": null,
-  "executionRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
   "containerDefinitions": [
     {
       "dnsSearchDomains": null,
@@ -87,62 +85,13 @@
       "name": "Robobot-Backend"
     }
   ],
-  "placementConstraints": [],
-  "memory": null,
-  "taskRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
-  "compatibilities": [
-    "EC2"
-  ],
-  "taskDefinitionArn": "arn:aws:ecs:us-west-2:491381585205:task-definition/Robobot-Backend:2",
   "family": "Robobot-Backend",
-  "requiresAttributes": [
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.execution-role-awslogs"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.task-iam-role"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-    },
-    {
-      "targetId": null,
-      "targetType": null,
-      "value": null,
-      "name": "ecs.capability.task-eni"
-    }
-  ],
-  "pidMode": null,
   "requiresCompatibilities": [
     "EC2"
   ],
   "networkMode": "awsvpc",
   "cpu": null,
   "revision": 2,
-  "status": "ACTIVE",
-  "inferenceAccelerators": null,
-  "proxyConfiguration": null,
   "volumes": [
     {
       "efsVolumeConfiguration": null,
