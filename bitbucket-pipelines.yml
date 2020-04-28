@@ -30,8 +30,8 @@ definitions:
               - export IMAGE_NAME="${DOCKERHUB_USERNAME}/robobot-back-end:${BITBUCKET_COMMIT}"
               
               # Build Docker image and push to Dockerhub      
-              - docker build -t $IMAGE_NAME .
               - docker login -u ${DOCKERHUB_USERNAME} --password ${DOCKERHUB_PASSWORD}
+              - docker build -t $IMAGE_NAME .
               - docker push $IMAGE_NAME
 
       - step: &deploy-to-aws-ecs
@@ -54,8 +54,6 @@ definitions:
 pipelines:             
   branches:
     '**':
-      - step: *build-test-sonarcloud
-      - step: *check-quality-gate-sonarcloud
       - step: *build-and-publish-docker-image
       - step: *deploy-to-aws-ecs
   pull-requests:
