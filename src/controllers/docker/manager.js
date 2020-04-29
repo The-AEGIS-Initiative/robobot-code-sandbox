@@ -96,6 +96,8 @@ const spawnDocker = async (image, port, containerName, userCode, userCodeTarget)
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
 
+    console.log(process.env.CERT)
+    
     try {
         var docker = spawn('docker', ['run', '-t', '-d', '--rm',
                                 '-p', `${port}:8080`,
