@@ -6,14 +6,7 @@
       "protocol": "tcp",
       "containerPort": 8000
     }],
-    "environment": [{
-        "name": "CERT",
-        "valueFrom": "AI_SSL_CERT"
-      },
-      {
-        "name": "CERTKEY",
-        "valueFrom": "AI_SSL_KEY"
-      },
+    "environment": [
       {
         "name": "DB_PASSWORD",
         "value": "${DB_PASSWORD}"
@@ -35,6 +28,16 @@
       "containerPath": "/var/run/docker.sock",
       "sourceVolume": "Docker-Daemon"
     }],
+   "secrets": [
+      {
+        "valueFrom": "AI_SSL_CERT",
+        "name": "CERT"
+      },
+      {
+        "valueFrom": "AI_SSL_KEY",
+        "name": "CERTKEY"
+      }
+    ],
     "memory": 300,
     "volumesFrom": [],
     "image": "${IMAGE_NAME}",
