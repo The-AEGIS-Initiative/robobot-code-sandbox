@@ -35,14 +35,14 @@ const LevelSchema = new Schema({
 	level: 
 	{
 		type: String,
-		required: true
+		required: true,
 		unique: true
 	},
 	levelData:
 	{
 		type: String,
 		required: true
-	}
+	},
 	code: 
 	{
 		type: String,
