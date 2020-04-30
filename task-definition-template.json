@@ -44,6 +44,7 @@
     "essential": true,
     "name": "Robobot-Backend"
   }],
+  "taskRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
   "family": "Robobot-Backend",
   "requiresCompatibilities": [
     "EC2"
