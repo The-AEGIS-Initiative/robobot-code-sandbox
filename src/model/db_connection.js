@@ -11,19 +11,18 @@ mongoose.set('useFindAndModify', false);
 var server = ""
 if(process.env.NODE_ENV=='development') { // Dev environment
 	server = 'mongodb://127.0.0.1:27017'
+	server = `mongodb+srv://admin:aegisinitiativekey123@robobot-myn0m.mongodb.net/test?retryWrites=true&w=majority`
 } else { // Production environment
 	const DB_USERNAME = process.env.DB_USERNAME
 	const DB_PASSWORD = process.env.DB_PASSWORD
 	const DB_URL = process.env.DB_URL
-	server = "mongodb+srv://"+DB_USERNAME+":"+DB_PASSWORD+DB_URL;
-
-	console.log(server)
+	server = `mongodb+srv://${DB_USERNAME}:${DB_PASSWORD}${DB_URL}`;
 }
 
 
 // Connect to MongoDB
 console.log(server)
-mongoose.connect(server, { useNewUrlParser: true, dbName: "testdb" });
+mongoose.connect(server, { useNewUrlParser: true, dbName: "dev-robobot", useUnifiedTopology: true});
 
 // Check if connection is successful
 let db = mongoose.connection;
