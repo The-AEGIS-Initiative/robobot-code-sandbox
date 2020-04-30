@@ -1,4 +1,5 @@
 {
+  "executionRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
   "containerDefinitions": [{
     "portMappings": [{
       "hostPort": 8000,
@@ -7,11 +8,11 @@
     }],
     "environment": [{
         "name": "CERT",
-        "value": "${AI_SSL_KEY}"
+        "valueFrom": "AI_SSL_CERT"
       },
       {
         "name": "CERTKEY",
-        "value": "${AI_SSL_CERT}"
+        "valueFrom": "AI_SSL_KEY"
       },
       {
         "name": "DB_PASSWORD",
