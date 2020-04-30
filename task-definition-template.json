@@ -5,6 +5,8 @@
       "protocol": "tcp",
       "containerPort": 8000
     }],
+    "memory": 300,
+    "volumesFrom": [],
     "image": "${IMAGE_NAME}",
     "essential": true,
     "name": "Robobot-Backend"
