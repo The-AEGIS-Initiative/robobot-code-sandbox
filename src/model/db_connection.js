@@ -11,7 +11,6 @@ mongoose.set('useFindAndModify', false);
 var server = ""
 if(process.env.NODE_ENV=='development') { // Dev environment
 	server = 'mongodb://127.0.0.1:27017'
-	server = `mongodb+srv://admin:aegisinitiativekey123@robobot-myn0m.mongodb.net/test?retryWrites=true&w=majority`
 } else { // Production environment
 	const DB_USERNAME = process.env.DB_USERNAME
 	const DB_PASSWORD = process.env.DB_PASSWORD
@@ -22,11 +21,6 @@ if(process.env.NODE_ENV=='development') { // Dev environment
 
 // Connect to MongoDB
 console.log(server)
-mongoose.connect(server, { useNewUrlParser: true, dbName: "dev-robobot", useUnifiedTopology: true});
-
-// Check if connection is successful
-let db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once("open", function(callback){
-	console.log("MongoDB connection succeeded.");
-});
+mongoose.connect(server, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true})
+				.then(() => console.log('Atlas MongoDB connection succeeded'))
+				.catch(err => console.log(err));
