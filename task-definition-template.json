@@ -38,7 +38,7 @@
         "name": "CERTKEY"
       }
     ],
-    "memory": 300,
+    "memory": 250,
     "volumesFrom": [],
     "image": "${IMAGE_NAME}",
     "essential": true,
