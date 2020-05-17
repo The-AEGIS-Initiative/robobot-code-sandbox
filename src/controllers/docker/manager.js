@@ -20,7 +20,7 @@ var containerIndex = 0;
  * @memberof module:docker/managers
  */
 module.exports.resetContainers = () => {
-    var {stdout, stderr } = execSync("docker rm -f $(docker ps -a -q) || :");
+    var {stdout, stderr } = execSync("docker rm -f $(docker ps -a -q) || true");
     console.log(stderr);
     console.log(stdout);
     return stdout;
@@ -32,7 +32,7 @@ module.exports.resetContainers = () => {
  * @param {*} containerName name of target container
  */
 module.exports.rmContainer = async (containerName) => {
-    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || :`);
+    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || true`);
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
 }
@@ -92,7 +92,7 @@ module.exports.sandboxUserCode = (port, containerName, userCodeSource, userCodeT
  * @param {*} containerName container name for referencing
  */
 const spawnDocker = async (image, port, containerName, userCode, userCodeTarget) => {
-    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || :`);
+    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || true`);
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
 
