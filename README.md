@@ -1,7 +1,3 @@
-Repository: [https://github.com/TeachRobo/back-end](https://github.com/TeachRobo/back-end)
-
-Documentation: [https://teachrobo.github.io/back-end/](https://teachrobo.github.io/back-end/)
-
 # Requirements
 Node.js:
 
@@ -18,7 +14,7 @@ Start nodejs server using
 #### `npm start`
 
 ## Using Docker
-#### `docker run -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock kevinkqi/robobot-backend:latest`
+#### `docker run -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock aegisinitiative/robobot-back-end:latest`
 
 
 
