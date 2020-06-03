@@ -62,7 +62,7 @@ app.use(cors({
 
 // Initialize socket.io
 var io = socket_io();
-//io.set('origins', '*:*');
+io.set('origins', '*:*');
 app.io = io;
 
 // Initialize socket events
