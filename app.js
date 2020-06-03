@@ -73,9 +73,11 @@ require('./src/controllers/sockets/events.js')(io);
 require('./src/controllers/docker/manager.js').resetContainers;
 
 //Routing
-app.use('/', indexRouter);
-app.use('/user', userRouter);
+app.use('/production/', indexRouter);
+app.use('/production', indexRouter);
+app.use('/production/user', userRouter);
 app.use('/development/', indexRouter)
+app.use('/development', indexRouter)
 app.use('/development/user', userRouter)
 
 
