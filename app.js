@@ -75,6 +75,8 @@ require('./src/controllers/docker/manager.js').resetContainers;
 //Routing
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/development/', indexRouter)
+app.use('/development/user', userRouter)
 
 
 
