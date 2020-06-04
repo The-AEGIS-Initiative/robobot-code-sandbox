@@ -63,6 +63,7 @@ app.use(cors({
 // Initialize socket.io
 var io = socket_io();
 io.origins((origin, callback) => {
+  return callback(null, true);
   if (origin == 'https://development-robobot.aegisinitiative.io') {
       return callback(null, true);
   }
@@ -81,10 +82,10 @@ require('./src/controllers/sockets/events.js')(io);
 require('./src/controllers/docker/manager.js').resetContainers;
 
 //Routing
-app.use('/production/', indexRouter);
+app.use('/', indexRouter);
+app.use('/user', userRouter);
 app.use('/production', indexRouter);
 app.use('/production/user', userRouter);
-app.use('/development/', indexRouter)
 app.use('/development', indexRouter)
 app.use('/development/user', userRouter)
 
