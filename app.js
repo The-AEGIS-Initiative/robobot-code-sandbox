@@ -62,7 +62,15 @@ app.use(cors({
 
 // Initialize socket.io
 var io = socket_io();
-io.set('origins', '*:*');
+io.origins((origin, callback) => {
+  if (origin == 'https://development-robobot.aegisinitiative.io') {
+      return callback(null, true);
+  }
+  if (origin == 'https://robobot.aegisinitiative.io') {
+      return callback(null, true);
+  }
+  callback(null, true);
+});
 app.io = io;
 
 // Initialize socket events
