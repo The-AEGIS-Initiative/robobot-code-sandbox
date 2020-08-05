@@ -1,0 +1,59 @@
+{
+  "executionRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
+  "containerDefinitions": [{
+    "portMappings": [{
+      "hostPort": 8000,
+      "protocol": "tcp",
+      "containerPort": 8000
+    }],
+    "environment": [
+      {
+        "name": "DB_PASSWORD",
+        "value": "${DB_PASSWORD}"
+      },
+      {
+        "name": "DB_URL",
+        "value": "${DB_URL}"
+      },
+      {
+        "name": "DB_USERNAME",
+        "value": "${DB_USERNAME}"
+      },
+      {
+        "name": "SECRET_TOKEN",
+        "value": "${SECRET_TOKEN}"
+      }
+    ],
+    "mountPoints": [{
+      "containerPath": "/var/run/docker.sock",
+      "sourceVolume": "Docker-Daemon"
+    }],
+   "secrets": [
+      {
+        "valueFrom": "AI_SSL_CERT",
+        "name": "CERT"
+      },
+      {
+        "valueFrom": "AI_SSL_KEY",
+        "name": "CERTKEY"
+      }
+    ],
+    "memory": 250,
+    "volumesFrom": [],
+    "image": "${IMAGE_NAME}",
+    "essential": true,
+    "name": "Robobot-Backend"
+  }],
+  "taskRoleArn": "arn:aws:iam::491381585205:role/ecsTaskExecutionRole",
+  "family": "Robobot-Backend",
+  "requiresCompatibilities": [
+    "EC2"
+  ],
+  "networkMode": "awsvpc",
+  "volumes": [{
+    "name": "Docker-Daemon",
+    "host": {
+      "sourcePath": "/var/run/docker.sock"
+    }
+  }]
+}

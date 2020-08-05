@@ -31,7 +31,7 @@ const formatGameServerURL = (port, ip)  => {
 
 var ip = '';
 
-if(process.env.AWS_SESSION_TOKEN != null){
+if(process.env.NODE_ENV != 'development'){
     http.get('http://169.254.169.254/latest/meta-data/public-ipv4', (res) => {
         res.setEncoding('utf8');
         res.on('data', (data) => {
@@ -72,19 +72,11 @@ module.exports = (io) => {
 
         // Begin listening for submitUserCode events from client
         socket.on('submitUserCode', (data) => {
-            // Write user code to file with .java extension
-            filesystem.writeFile("usercode/temp.py", data["data"], err => {
-                // Throw errors
-                if (err) throw err;
-
-                // User code saved successfully
-                console.log("User code written to disk");
-            });
 
             // Send and run user code in designated container
             DockerManager.sandboxUserCode(containerInfo["port"], 
                                           containerInfo["containerName"],
-                                          `./usercode/temp.py`,
+                                          data.data,
                                           `/app/game/user_code.py`);
         });
 

@@ -20,7 +20,7 @@ var containerIndex = 0;
  * @memberof module:docker/managers
  */
 module.exports.resetContainers = () => {
-    var {stdout, stderr } = execSync("docker rm -f $(docker ps -a -q) || :");
+    var {stdout, stderr } = execSync("docker rm -f $(docker ps -a -q) || true");
     console.log(stderr);
     console.log(stdout);
     return stdout;
@@ -32,7 +32,7 @@ module.exports.resetContainers = () => {
  * @param {*} containerName name of target container
  */
 module.exports.rmContainer = async (containerName) => {
-    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || :`);
+    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || true`);
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
 }
@@ -53,6 +53,21 @@ module.exports.assignContainerAndPort = (clientID) => {
     return ContainerInfo[containerName]
 }
 
+module.exports.updateGameServer = (successCallback, failCallBack) => {
+    var {stdout, stderr } = execSync(`docker pull aegisinitiative/robobot-game-server:latest`);
+    if(stderr){
+        console.log(stderr);
+        console.log("Did not update, error")
+        failCallBack(stderr);
+    } else {
+        console.log(stdout);
+        console.log("Updated")
+        successCallback(stdout);
+    }
+
+    
+}
+
 /** Initialize set of containers
  * @function
  * @memberof module:docker/manager
@@ -62,7 +77,7 @@ module.exports.sandboxUserCode = (port, containerName, userCodeSource, userCodeT
     console.log(`Initializing ${containerName}`);
     
     // Spawn container
-    var docker_process = spawnDocker('kevinkqi/python-game-server:latest', port, containerName, userCodeSource, userCodeTarget);
+    var docker_process = spawnDocker('aegisinitiative/robobot-game-server:latest', port, containerName, userCodeSource, userCodeTarget);
     
     // Store child process information in ContainerInfo
     ContainerInfo[containerName].process = docker_process;
@@ -76,24 +91,26 @@ module.exports.sandboxUserCode = (port, containerName, userCodeSource, userCodeT
  * @param {*} port must be an unused port
  * @param {*} containerName container name for referencing
  */
-const spawnDocker = async (image, port, containerName, userCodeSource, userCodeTarget) => {
-    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || :`);
+const spawnDocker = async (image, port, containerName, userCode, userCodeTarget) => {
+    var { stdout, stderr } = await exec(`docker rm -f ${containerName} || true`);
     if (stderr) {console.log(stderr)};
     console.log(`${containerName} recycled!`);
 
+    console.log(process.env.CERT)
+    
     try {
         var docker = spawn('docker', ['run', '-t', '-d', '--rm',
                                 '-p', `${port}:8080`,
+                                '-e', `cert=${process.env.CERT}`,
+                                '-e', `certkey=${process.env.CERTKEY}`,
+                                '-e', `code=${userCode}`,
                                 '--name', `${containerName}`,
-                                `${image}`, 'sh']);
+                                `${image}`, 'sh',]);
     } catch {(e) => console.log(e)};
     
 
     docker.stdout.on('data', async (data) => {
         console.log(`${containerName} stdout: ${data}`);
-        var {stdout, stderr } = await exec(`docker cp ${userCodeSource} ${containerName}:${userCodeTarget}`);
-        console.log(stderr);
-        console.log(stdout);
         var {stdout, stderr } = await exec(`docker exec ${containerName} python /app/main.py`);
         console.log(stderr);
         console.log(stdout);

@@ -41,28 +41,41 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(bodyparser.urlencoded({ extended: true }));
 
 // Set CORS
-if(process.env.NODE_ENV == "development"){
-  app.use(cors({credentials: true, origin: true}));
-} else {
-  app.use(cors({credentials: true, origin: 'https://robobot.aegisinitiative.io'}));
-}
+const allowedOrigins = ['http://localhost:3000',
+                      'https://development-robobot.aegisinitiative.io',
+                      'https://robobot.aegisinitiative.io'];
+
+app.use(cors({
+  origin: function(origin, callback){
+    // allow requests with no origin 
+    // (like mobile apps or curl requests)
+
+    if(!origin) return callback(null, true);
+    if(allowedOrigins.indexOf(origin) === -1){
+      var msg = 'The CORS policy for this site does not ' +
+                'allow access from the specified Origin.';
+      //return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  }
+}));
 
 // Initialize socket.io
 var io = socket_io();
-if(process.env.NODE_ENV == "development"){
-  io.set('origins', '*:*');
-} else {
-  io.set('origins', 'https://robobot.aegisinitiative.io:*');
-}
+io.origins((origin, callback) => {
+  return callback(null, true);
+  if (origin == 'https://development-robobot.aegisinitiative.io') {
+      return callback(null, true);
+  }
+  if (origin == 'https://robobot.aegisinitiative.io') {
+      return callback(null, true);
+  }
+  callback(null, true);
+});
 app.io = io;
 
 // Initialize socket events
 require('./src/controllers/sockets/events.js')(io);
-
-// Connect to mongoDB
-if(process.env.NODE_ENV != "test"){
-  require('./src/model/db_connection.js');
-}
 
 // Delete any dangling containers
 // TODO: This doesn't really work...
@@ -71,6 +84,10 @@ require('./src/controllers/docker/manager.js').resetContainers;
 //Routing
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/production', indexRouter);
+app.use('/production/user', userRouter);
+app.use('/development', indexRouter)
+app.use('/development/user', userRouter)
 
 
 

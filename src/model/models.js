@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const bcrypt = require('bcrypt');
 const saltRounds = 10;
 
-const LevelSchema = new Schema({
+const ProgressSchema = new Schema({
 	level: 
 	{
 		type: String,
@@ -19,21 +19,51 @@ const LevelSchema = new Schema({
 })
 
 const UserSchema = new Schema({
-	email: 
+	username: 
 	{
 		type: String,
 		required: true,
 		unique: true
 	},
-	password:
+	progress:
+	{
+		type: [ ProgressSchema ]
+	}
+});
+
+const LevelSchema = new Schema({
+	level: 
+	{
+		type: String,
+		required: true,
+		unique: true
+	},
+	levelData:
 	{
 		type: String,
 		required: true
 	},
-	progress:
+	code: 
 	{
-		type: [ LevelSchema ]
+		type: String,
+		required: true
+	},
+	prompt: 
+	{
+		type: String,
+		required: true,
+	},
+	task: 
+	{
+		type: String,
+		required: true
+	},
+	lesson: 
+	{
+		type: String,
+		required: true
 	}
-});
+})
 
 module.exports.UserModel = new mongoose.model('User', UserSchema)
+module.exports.LevelModel = new mongoose.model('Level', LevelSchema)
