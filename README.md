@@ -1,14 +1,13 @@
 # Requirements
-Node.js:
+Node.js
+Docker
 
 [https://nodejs.org/en/download/](https://nodejs.org/en/download/)
 # Usage
 ## Using npm
-Obtain config.json file containing necessary API keys. Place `config.json` in the same directory as `app.js`.
-
 \
 Update node_modules with
-#### `npm ci`
+#### `npm install`
 \
 Start nodejs server using
 #### `npm start`
@@ -16,7 +15,8 @@ Start nodejs server using
 ## Using Docker
 #### `docker run -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock aegisinitiative/robobot-back-end:latest`
 
-
+# How it works
+The robobot-code-sandbox sandboxes code by executing it inside a docker container. The node.js server manages each docker container lifecycle for each client.
 
 # Development Guidelines
 Please read this section before making any changes!
