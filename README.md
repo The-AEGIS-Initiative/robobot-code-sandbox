@@ -1,4 +1,13 @@
-# Requirements
+# Robobot Code Sandbox
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
+
+This repo is the codebase for the code sandbox service used in Robobot.
+
+See [robobot](https://github.com/The-AEGIS-Initiative/robobot) for the main Robobot repo.
+See [robobot-game-server](https://github.com/The-AEGIS-Initiative/python-game-server) for the python robot API.
+
+## Requirements
 Node.js:
 
 [https://nodejs.org/en/download/](https://nodejs.org/en/download/)\
@@ -7,8 +16,8 @@ Docker:
 
 https://www.docker.com/get-started
 
-# Usage
-## Using npm
+## Usage
+### Using npm
 \
 Update node_modules with
 #### `npm install`
@@ -19,14 +28,14 @@ Start nodejs server using
 ## Using Docker
 #### `docker run -p 8000:8000 -v /var/run/docker.sock:/var/run/docker.sock aegisinitiative/robobot-back-end:latest`
 
-# How it works
+## How it works
 The robobot-code-sandbox sandboxes code by executing it inside a docker container. The node.js server manages each docker container lifecycle for each client.
 
-# Development Guidelines
+## Development Guidelines
 Please read this section before making any changes!
 <br />
 
-## Contributing
+### Contributing
 #### Branch before making changes!
 #### `git checkout -b <your-branch-name>`
 \
@@ -50,31 +59,13 @@ Delete the upstream branch (<b>Do not delete branches that are not yours!</b>)
 #### `git push origin --delete <your-branch-name>`
 <br />
 
-## Installing npm modules
+### Installing npm modules
 Use --save when installing npm modules to ensure dependencies are installed locally.
 #### `npm install --save <package-name>`
 <br />
 
-## Documenting Your Code
-#### Document your code <b>BEFORE</b> pushing changes!
 
-This project uses `jsdoc` (for javascript)
-
-See [https://devhints.io/jsdoc](https://devhints.io/jsdoc) for jsdoc syntax
-\
-\
-\
-<b>BEFORE</b> pushing changes, generate html documentation files using
-#### `npm run docs`
-\
-View current local documentation at
-#### `docs/index.html`
-\
-View master branch documentation at
-#### [https://teachrobo.github.io/back-end/](https://teachrobo.github.io/back-end/)
-
-
-# Project File Structure
+## File Structure
 
 ### Node.js server
 ##### `bin/www`
