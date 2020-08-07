@@ -1,8 +1,12 @@
 # Requirements
-Node.js
-Docker
+Node.js:
 
-[https://nodejs.org/en/download/](https://nodejs.org/en/download/)
+[https://nodejs.org/en/download/](https://nodejs.org/en/download/)\
+
+Docker:
+
+https://www.docker.com/get-started
+
 # Usage
 ## Using npm
 \
