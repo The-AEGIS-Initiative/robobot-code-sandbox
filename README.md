@@ -1,11 +1,11 @@
-# Robobot Code Sandbox
+# LernRobotics Code Sandbox
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![Discord](https://img.shields.io/discord/700225957314691083?label=Discord)
 
-This repo is the codebase for the code sandbox service used in Robobot.
+This repo is the codebase for the code sandbox service used in LernRobotics.
 
-See [robobot](https://github.com/The-AEGIS-Initiative/robobot) for the main Robobot repo.
-See [robobot-game-server](https://github.com/The-AEGIS-Initiative/python-game-server) for the python robot API.
+See [lernrobotics](https://github.com/The-AEGIS-Initiative/robobot) for the main LernRobotics repo.
+See [lernrobotics-game-server](https://github.com/The-AEGIS-Initiative/python-game-server) for the python robot API.
 
 ## Requirements
 Node.js:
